@@ -1,48 +1,27 @@
 from fastapi import FastAPI
-from pydantic import BaseModel
-import random
+from fastapi.middleware.cors import CORSMiddleware
+
+from database import Base, engine
+
+from routes.auth import router as auth_router
+from routes.claim import router as claim_router
+from routes.policy import router as policy_router
 
 app = FastAPI()
 
-# ------------------ MODELS ------------------
+# Create tables
+Base.metadata.create_all(bind=engine)
 
-class User(BaseModel):
-    email: str
-    password: str
+# CORS (IMPORTANT for React)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-class PolicyRequest(BaseModel):
-    location: str
-
-# ------------------ AUTH ------------------
-
-@app.post("/login")
-def login(user: User):
-    return {"message": "Login successful", "token": "dummy-token"}
-
-# ------------------ AI PREMIUM ------------------
-
-@app.post("/calculate-premium")
-def calculate_premium(data: PolicyRequest):
-    base = 30
-    
-    if data.location == "high-risk":
-        base += 15
-    elif data.location == "medium-risk":
-        base += 5
-
-    return {"weekly_premium": base}
-
-# ------------------ TRIGGER ------------------
-
-@app.get("/simulate-rain")
-def simulate_rain():
-    rainfall = random.randint(0, 100)
-
-    if rainfall > 50:
-        return {
-            "trigger": True,
-            "message": "Heavy rain detected",
-            "payout": 500
-        }
-    
-    return {"trigger": False, "message": "No disruption"}
+# Routes
+app.include_router(auth_router)
+app.include_router(claim_router)
+app.include_router(policy_router)
