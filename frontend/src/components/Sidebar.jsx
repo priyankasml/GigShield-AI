@@ -1,37 +1,37 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
+
+const workerNav = [
+  { section: "MAIN" },
+  { label: "Dashboard", path: "/dashboard", icon: "⬡" },
+  { label: "My Policy",  path: "/policy",   icon: "◈" },
+  { label: "My Claims",  path: "/claims",   icon: "◎" },
+  { section: "ACCOUNT" },
+  { label: "Profile",    path: "/profile",  icon: "◇" },
+];
+
+const adminNav = [
+  { section: "ADMIN" },
+  { label: "Panel", path: "/admin", icon: "⬡" },
+];
 
 export default function Sidebar() {
-  const nav = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const role     = localStorage.getItem("role");
+  const items    = role === "admin" ? adminNav : workerNav;
 
   return (
-    <div style={s.sidebar}>
-      <h2 style={s.logo}>🌧 GigShield</h2>
-
-      <div style={s.menu}>
-        <p onClick={()=>nav("/dashboard")}>🏠 Dashboard</p>
-        <p onClick={()=>nav("/policy")}>📋 Policy</p>
-        <p onClick={()=>nav("/claim")}>🌧 Claims</p>
-      </div>
-    </div>
+    <aside className="sidebar">
+      {items.map((item, i) =>
+        item.section ? (
+          <p key={i} className="sidebar-section">{item.section}</p>
+        ) : (
+          <button key={item.path} className={`sidebar-item${location.pathname === item.path ? " active" : ""}`} onClick={() => navigate(item.path)}>
+            <span className="sidebar-icon">{item.icon}</span>
+            {item.label}
+          </button>
+        )
+      )}
+    </aside>
   );
 }
-
-const s = {
-  sidebar: {
-    width: "200px",
-    height: "100vh",
-    background: "#0f172a",
-    padding: "20px",
-    position: "fixed"
-  },
-  logo: {
-    color: "#4fc3f7"
-  },
-  menu: {
-    marginTop: "30px",
-    display: "flex",
-    flexDirection: "column",
-    gap: "15px",
-    cursor: "pointer"
-  }
-};

@@ -1,22 +1,25 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+console.log("APP WORKING");
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
-import Policy from "./pages/Policy";
 import Claim from "./pages/Claim";
+import Policy from "./pages/Policy";
 
-function App() {
+export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+
         <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/claims" element={<Claim />} />
         <Route path="/policy" element={<Policy />} />
-        <Route path="/claim" element={<Claim />} />
+
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </BrowserRouter>
   );
 }
-
-export default App;

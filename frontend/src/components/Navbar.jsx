@@ -1,16 +1,41 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export default function Navbar() {
-  const nav = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const role = localStorage.getItem("role");
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    navigate("/");
+  };
+
+  const workerLinks = [
+    { label: "Dashboard", path: "/dashboard" },
+    { label: "My Claims",  path: "/claims" },
+    { label: "My Policy",  path: "/policy" },
+  ];
+
+  const adminLinks = [
+    { label: "Admin Panel", path: "/admin" },
+  ];
+
+  const links = role === "admin" ? adminLinks : workerLinks;
 
   return (
-    <div style={{display:"flex", justifyContent:"space-between", padding:"10px 20px", background:"#12182b"}}>
-      <h3>GigShield</h3>
-      <div>
-        <button onClick={()=>nav("/dashboard")}>Dashboard</button>
-        <button onClick={()=>nav("/policy")}>Policy</button>
-        <button onClick={()=>nav("/claim")}>Claim</button>
+    <nav className="navbar">
+      <span className="navbar-brand" onClick={() => navigate(role === "admin" ? "/admin" : "/dashboard")}>
+        Gig<span>Shield</span> AI
+      </span>
+      <div className="navbar-links">
+        {links.map(({ label, path }) => (
+          <button key={path} className={`nav-link${location.pathname === path ? " active" : ""}`} onClick={() => navigate(path)}>
+            {label}
+          </button>
+        ))}
+        <button className="nav-logout" onClick={logout}>Logout</button>
       </div>
-    </div>
+    </nav>
   );
 }

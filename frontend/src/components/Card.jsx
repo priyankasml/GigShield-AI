@@ -1,37 +1,29 @@
-export default function Card({ title, value, icon }) {
+export function StatCard({ label, value, sub, color = "" }) {
   return (
-    <div style={s.card}>
-      <div style={s.top}>
-        <span style={s.icon}>{icon}</span>
-        <p style={s.title}>{title}</p>
-      </div>
-      <h2 style={s.value}>{value}</h2>
+    <div className="stat-card">
+      <p className="stat-label">{label}</p>
+      <p className={`stat-value ${color}`}>{value}</p>
+      {sub && <p className="stat-sub">{sub}</p>}
     </div>
   );
 }
 
-const s = {
-  card: {
-    background: "#12182b",
-    padding: "20px",
-    borderRadius: "12px",
-    width: "200px",
-    boxShadow: "0 0 15px rgba(0,0,0,0.4)"
-  },
-  top: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px"
-  },
-  icon: {
-    fontSize: "20px"
-  },
-  title: {
-    fontSize: "14px",
-    color: "#9ca3af"
-  },
-  value: {
-    marginTop: "10px",
-    color: "#4fc3f7"
-  }
-};
+export function ContentCard({ title, children, action }) {
+  return (
+    <div className="table-card">
+      <div style={{ display:"flex", alignItems:"center", justifyContent:"space-between", marginBottom:"1.25rem" }}>
+        {title && <p className="table-title">{title}</p>}
+        {action}
+      </div>
+      {children}
+    </div>
+  );
+}
+
+export default function Card({ children, style = {} }) {
+  return (
+    <div className="card" style={style}>
+      {children}
+    </div>
+  );
+}

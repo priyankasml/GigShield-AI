@@ -1,27 +1,37 @@
-.container {
-  padding: 2rem;
-}
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap');
 
-.card {
-  background: #12182b;
-  border-radius: 12px;
-  padding: 20px;
-  box-shadow: 0 0 20px rgba(0,0,0,0.4);
-}
+:root {
+  --orange:        #fb923c;
+  --orange-dark:   #c2410c;
+  --orange-deeper: #ea7c2c;
+  --orange-glow:   rgba(251,146,60,0.18);
+  --orange-dim:    rgba(251,146,60,0.08);
+  --orange-border: rgba(251,146,60,0.3);
 
-.btn {
-  background: #3b82f6;
-  color: white;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
+  --bg:            #0a0a0a;
+  --bg-card:       #141414;
+  --bg-input:      #0f0f0f;
+  --bg-tab:        #0f0f0f;
 
-.input {
-  width: 100%;
-  padding: 10px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: none;
+  --border:        #222222;
+  --border-dim:    #2a2a2a;
+
+  --text-primary:  #ffffff;
+  --text-secondary:#888888;
+  --text-dim:      #444444;
+  --text-muted:    #333333;
+
+  --radius-sm:     8px;
+  --radius-md:     12px;
+  --radius-lg:     20px;
+
+  --shadow-card:   0 0 40px rgba(0,0,0,0.5);
+  --shadow-orange: 0 4px 24px rgba(251,146,60,0.2);
+
+  --font-mono:     'JetBrains Mono', monospace;
+  --font-body:     'Inter', sans-serif;
+
+  --green:  #22c55e;
+  --red:    #ef4444;
+  --blue:   #3b82f6;
 }
