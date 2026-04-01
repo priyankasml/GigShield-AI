@@ -1,45 +1,20 @@
-import Navbar from "../components/Navbar";
-import { useNavigate } from "react-router-dom";
+import Sidebar from "../components/Sidebar";
+import Card from "../components/Card";
 
 export default function Dashboard() {
-  const navigate = useNavigate();
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
-
   return (
-    <div>
-      <Navbar logout={logout} />
+    <div style={{ display: "flex" }}>
+      <Sidebar />
 
-      <div style={s.container}>
-        <h1>📊 Dashboard</h1>
+      <div style={{ marginLeft: "220px", padding: "20px" }}>
+        <h1>Dashboard</h1>
 
-        <button onClick={() => navigate("/policy")} style={s.card}>
-          📋 Manage Policy
-        </button>
-
-        <button onClick={() => navigate("/claim")} style={s.card}>
-          🌧 Simulate Claim
-        </button>
+        <div style={{ display: "flex", gap: "20px" }}>
+          <Card title="Earnings Protected" value="₹12,000" icon="💰" />
+          <Card title="Active Policies" value="3" icon="📄" />
+          <Card title="Claims" value="5" icon="🌧" />
+        </div>
       </div>
     </div>
   );
 }
-
-const s = {
-  container: {
-    textAlign: "center",
-    marginTop: "50px"
-  },
-  card: {
-    display: "block",
-    margin: "20px auto",
-    padding: "20px",
-    width: "200px",
-    background: "#4fc3f7",
-    border: "none",
-    cursor: "pointer"
-  }
-};

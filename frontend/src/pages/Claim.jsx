@@ -1,53 +1,29 @@
-import { useState } from "react";
 import Navbar from "../components/Navbar";
+import { useState } from "react";
 import API from "../services/api";
-import { useNavigate } from "react-router-dom";
 
 export default function Claim() {
-  const navigate = useNavigate();
-  const [result, setResult] = useState(null);
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    navigate("/");
-  };
+  const [resData, setResData] = useState(null);
 
   const simulate = async () => {
     const res = await API.get("/simulate-rain");
-    setResult(res.data);
+    setResData(res.data);
   };
 
   return (
     <div>
-      <Navbar logout={logout} />
+      <Navbar />
+      <div className="container">
+        <h2>Claim Simulation</h2>
+        <button className="btn" onClick={simulate}>Trigger</button>
 
-      <div style={s.container}>
-        <h2>🌧 Rain Simulation</h2>
-
-        <button onClick={simulate} style={s.btn}>
-          Trigger Rain
-        </button>
-
-        {result && (
+        {resData && (
           <div>
-            <p>{result.message}</p>
-            {result.trigger && <h3>💸 ₹{result.payout}</h3>}
+            <p>{resData.message}</p>
+            {resData.trigger && <h3>💸 ₹{resData.payout}</h3>}
           </div>
         )}
       </div>
     </div>
   );
 }
-
-const s = {
-  container: {
-    textAlign: "center",
-    marginTop: "50px"
-  },
-  btn: {
-    padding: "10px",
-    background: "#1565c0",
-    color: "white",
-    border: "none"
-  }
-};
